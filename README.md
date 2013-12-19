@@ -5,6 +5,17 @@ ModelDoc Generator will extend Gii too allow you to update your existing models 
 It will not create any new files.  It will only update your existing models.
 
 
+### Contents
+
+[Features](#features)  
+[Screenshots](#screenshots)  
+[Installation](#installation)  
+[Configuration](#configuration)  
+[Usage](#usage)  
+[License](#license)  
+[Links](#links) 
+
+
 ## Features
 
 - Adds properties for each field in the table.
@@ -89,5 +100,5 @@ Visit `index.php?r=gii`, then choose ModelDoc from the menu.
 ## Links
 
 - [Yii Extension](http://www.yiiframework.com/extension/gii-modeldoc-generator)
-- [Packagist](https://packagist.org/packages/mrphp/gii-modeldoc-generator)
+- [Composer Package](https://packagist.org/packages/mrphp/gii-modeldoc-generator)
 - [MrPHP](http://mrphp.com.au)
