@@ -73,14 +73,17 @@ return array(
 
 Ensure you have `--- BEGIN GenerateProperties ---` and `--- END GenerateProperties ---` in each of your models, for example:
 
-```
+```php
 /**
- * This comment will not be altered.
+ * Your class description that will not be altered by GenerateProperties
  *
  * --- BEGIN GenerateProperties ---
- * properties will be inserted here
+ *
+ *  this section will be replaced by GenerateProperties
+ *
  * --- END GenerateProperties ---
  */
+class MyModel extends CActiveRecord { ... }
 ```
 
 Visit `index.php?r=gii`, then choose ModelDoc from the menu.
