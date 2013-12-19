@@ -17,10 +17,10 @@ It will not create any new files.  It will only update your existing models.
 ## Screenshots
 
 Listing all the models that are going to have phpDocs inserted:
-![Files](https://raw.github.com/cornernote/yii-embed-opencart/master/screenshot/files.png)
+![Files](https://raw.github.com/cornernote/gii-modeldoc-generator/master/screenshot/files.png)
 
 Preview of the model before it gets updated:
-![Preview](https://raw.github.com/cornernote/yii-embed-opencart/master/screenshot/preview.png)
+![Preview](https://raw.github.com/cornernote/gii-modeldoc-generator/master/screenshot/preview.png)
 
 
 ## Installation
