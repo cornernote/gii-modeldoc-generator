@@ -1,10 +1,8 @@
-# gii-modeldoc-generator
+# Gii ModelDoc Generator for Yii framework
 
-Gii ModelDoc Generator for Yii framework 
+ModelDoc Generator will extend Gii too allow you to update your existing models with phpDoc compatible documentation.  The phpDoc comments greatly assist with phpStorm's code completion.
 
-ModelDoc Generator will extend Gii too allow you to update your existing models with phpDoc compatible documentation.
-
-The ModelDoc Generator will not create any new files.  It will only update your existing models.
+It will not create any new files.  It will only update your existing models.
 
 
 ## Features
@@ -12,7 +10,8 @@ The ModelDoc Generator will not create any new files.  It will only update your 
 - Adds properties for each field in the table.
 - Adds a property for each relation.
 - Adds methods inherited from CActiveRecord
-- Adds methods assigned from each behavior.
+- Adds methods assigned from each behavior, unless it is defined by the model itself.
+- All methods contain full syntax, including params and returns.
 
 
 ## Installation
