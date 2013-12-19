@@ -23,11 +23,13 @@ class ModelDocCode extends CCodeModel
     /**
      * @var
      */
-    public $addModelMethodDoc = false;
+    public $addModelMethodDoc;
+    
     /**
      * @var string
      */
     public $beginBlock = ' * --- BEGIN ModelDoc ---';
+    
     /**
      * @var string
      */
