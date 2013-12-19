@@ -27,11 +27,11 @@ class ModelDocCode extends CCodeModel
     /**
      * @var string
      */
-    public $beginBlock = ' * --- BEGIN GenerateProperties ---';
+    public $beginBlock = ' * --- BEGIN ModelDoc ---';
     /**
      * @var string
      */
-    public $endBlock = ' * --- END GenerateProperties ---';
+    public $endBlock = ' * --- END ModelDoc ---';
 
     /**
      * @return array
