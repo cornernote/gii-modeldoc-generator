@@ -131,14 +131,14 @@ class ModelDocCode extends CCodeModel
     {
         $file = Yii::getPathOfAlias($this->modelPath) . '/' . $modelClass . '.php';
         if (!file_exists($file))
-            throw new CException(strtr(Yii::t('dressing', 'File :file was not found.'), array(':file' => $file)));
+            throw new CException(strtr(Yii::t('modelDocGenerator', 'File :file was not found.'), array(':file' => $file)));
         $content = file_get_contents($file);
         $content = explode($this->beginBlock, $content);
         if (!isset($content[1]))
-            throw new CException(strtr(Yii::t('dressing', 'File :file does not contain the beginBlock :beginBlock.'), array(':file' => $file, ':beginBlock' => $this->beginBlock)));
+            throw new CException(strtr(Yii::t('modelDocGenerator', 'File :file does not contain the beginBlock :beginBlock.'), array(':file' => $file, ':beginBlock' => $this->beginBlock)));
         $content[1] = explode($this->endBlock, $content[1]);
         if (!isset($content[1][1]))
-            throw new CException(strtr(Yii::t('dressing', 'File :file does not contain the endBlock :endBlock.'), array(':file' => $file, ':endBlock' => $this->endBlock)));
+            throw new CException(strtr(Yii::t('modelDocGenerator', 'File :file does not contain the endBlock :endBlock.'), array(':file' => $file, ':endBlock' => $this->endBlock)));
         $content[1] = $content[1][1];
         return $content;
     }

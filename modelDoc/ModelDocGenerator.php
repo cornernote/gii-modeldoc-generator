@@ -1,4 +1,5 @@
 <?php
+Yii::setPathOfAlias('modelDocGenerator', dirname(dirname(__FILE__)));
 
 /**
  * ModelDocGenerator
@@ -14,6 +15,6 @@ class ModelDocGenerator extends CCodeGenerator
     /**
      * @var string
      */
-    public $codeModel = 'dressing.gii.modeldoc.ModelDocCode';
+    public $codeModel = 'modelDocGenerator.ModelDocCode';
 
 }
