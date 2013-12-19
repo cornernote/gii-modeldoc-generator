@@ -14,6 +14,15 @@ It will not create any new files.  It will only update your existing models.
 - All methods contain full syntax, including params and returns.
 
 
+## Screenshots
+
+Listing all the models that are going to have phpDocs inserted:
+![Files](https://raw.github.com/cornernote/yii-embed-opencart/master/screenshot/files.png)
+
+Preview of the model before it gets updated:
+![Preview](https://raw.github.com/cornernote/yii-embed-opencart/master/screenshot/preview.png)
+
+
 ## Installation
 
 Please download using ONE of the following methods:
@@ -51,6 +60,18 @@ return array(
 ```
 
 ## Usage
+
+Ensure you have `--- BEGIN GenerateProperties ---` and `--- END GenerateProperties ---` in each of your models, for example:
+
+```
+/**
+ * This comment will not be altered.
+ *
+ * --- BEGIN GenerateProperties ---
+ * properties will be inserted here
+ * --- END GenerateProperties ---
+ */
+```
 
 Visit `index.php?r=gii`, then choose ModelDoc from the menu.
 
