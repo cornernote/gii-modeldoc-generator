@@ -15,6 +15,7 @@ class ModelDocCode extends CCodeModel
      * @var
      */
     public $modelClass;
+    
     /**
      * @var string
      */
