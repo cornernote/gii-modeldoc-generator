@@ -1,5 +1,5 @@
 <?php
-Yii::setPathOfAlias('modelDocGenerator', dirname(dirname(__FILE__)));
+Yii::setPathOfAlias('modelDocGenerator', dirname(__FILE__));
 
 /**
  * ModelDocGenerator
