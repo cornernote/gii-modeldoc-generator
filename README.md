@@ -48,7 +48,7 @@ php composer.phar require mrphp/gii-modeldoc-generator
 
 ### Manual Installation
 
-Download the [latest version](https://github.com/cornernote/yii-dressing/archive/master.zip) and move the `gii-modeldoc-generator` folder into your `protected/extensions` folder.
+Download the [latest version](https://github.com/cornernote/gii-modeldoc-generator/archive/master.zip) and move the `gii-modeldoc-generator` folder into your `protected/extensions` folder.
 
 
 ## Configuration
