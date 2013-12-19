@@ -2,8 +2,6 @@
 
 ModelDoc Generator will extend Gii too allow you to update your existing models with phpDoc compatible documentation.  The phpDoc comments greatly assist with phpStorm's code completion.
 
-It will not create any new files.  It will only update your existing models.
-
 
 ### Contents
 
@@ -12,6 +10,7 @@ It will not create any new files.  It will only update your existing models.
 [Installation](#installation)  
 [Configuration](#configuration)  
 [Usage](#usage)  
+[Notes](#notes)  
 [License](#license)  
 [Links](#links) 
 
@@ -85,6 +84,11 @@ Ensure you have `--- BEGIN GenerateProperties ---` and `--- END GenerateProperti
 ```
 
 Visit `index.php?r=gii`, then choose ModelDoc from the menu.
+
+
+## Notes
+
+This extension will not create any new model files.  You should first create them or generate them with a model generator.
 
 
 ## License
