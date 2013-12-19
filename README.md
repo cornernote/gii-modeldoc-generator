@@ -75,7 +75,7 @@ Ensure you have `--- BEGIN GenerateProperties ---` and `--- END GenerateProperti
 
 ```php
 /**
- * Your class description that will not be altered by GenerateProperties
+ * Your class description that will not be altered by ModelDoc
  *
  * --- BEGIN ModelDoc ---
  *
