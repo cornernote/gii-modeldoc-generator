@@ -77,11 +77,11 @@ Ensure you have `--- BEGIN GenerateProperties ---` and `--- END GenerateProperti
 /**
  * Your class description that will not be altered by GenerateProperties
  *
- * --- BEGIN GenerateProperties ---
+ * --- BEGIN ModelDoc ---
  *
- *  this section will be replaced by GenerateProperties
+ *  this section will be replaced by ModelDoc
  *
- * --- END GenerateProperties ---
+ * --- END ModelDoc ---
  */
 class MyModel extends CActiveRecord { ... }
 ```
