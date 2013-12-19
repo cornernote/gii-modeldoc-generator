@@ -88,5 +88,6 @@ Visit `index.php?r=gii`, then choose ModelDoc from the menu.
 
 ## Links
 
-- [Yii Extensions Page](http://www.yiiframework.com/extension/gii-modeldoc-generator/)
+- [Yii Extension](http://www.yiiframework.com/extension/gii-modeldoc-generator)
+- [Packagist](https://packagist.org/packages/mrphp/gii-modeldoc-generator)
 - [MrPHP](http://mrphp.com.au)
