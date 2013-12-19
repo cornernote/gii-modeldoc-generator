@@ -81,5 +81,12 @@ Visit `index.php?r=gii`, then choose ModelDoc from the menu.
 - Author: Brett O'Donnell <cornernote@gmail.com>
 - Author: Zain Ul abidin <zainengineer@gmail.com>
 - Source Code: https://github.com/cornernote/gii-modeldoc-generator
-- Copyright © 2013 Mr PHP <info@mrphp.com.au>
+- Copyright Â© 2013 Mr PHP <info@mrphp.com.au>
 - License: BSD-3-Clause https://raw.github.com/cornernote/gii-modeldoc-generator/master/LICENSE
+
+
+
+## Links
+
+- [Yii Extensions Page](http://www.yiiframework.com/extension/gii-modeldoc-generator/)
+- [MrPHP](http://mrphp.com.au)
