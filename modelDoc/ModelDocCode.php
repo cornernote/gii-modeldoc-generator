@@ -15,7 +15,7 @@ class ModelDocCode extends CCodeModel
      * @var
      */
     public $modelClass;
-    
+
     /**
      * @var string
      */
@@ -25,12 +25,12 @@ class ModelDocCode extends CCodeModel
      * @var
      */
     public $addModelMethodDoc;
-    
+
     /**
      * @var string
      */
     public $beginBlock = ' * --- BEGIN ModelDoc ---';
-    
+
     /**
      * @var string
      */
@@ -73,10 +73,9 @@ class ModelDocCode extends CCodeModel
     }
 
     /**
-     * @param $attribute
-     * @param $params
+     *
      */
-    public function validateModelPath($attribute, $params)
+    public function validateModelPath()
     {
         if (Yii::getPathOfAlias($this->modelPath) === false)
             $this->addError('modelPath', 'Model Path must be a valid path alias.');
@@ -128,6 +127,7 @@ class ModelDocCode extends CCodeModel
 
     /**
      * @param $modelClass string
+     * @throws CException
      * @return string
      */
     public function getContent($modelClass)
@@ -147,27 +147,6 @@ class ModelDocCode extends CCodeModel
     }
 
     /**
-     * @param $modelName string
-     * @return string
-     */
-    public function getTopContent($modelName)
-    {
-        $contents = $this->beginBlock . "\n" . $properties . "\n" . $this->endBlock;
-        $fileName = Yii::getPathOfAlias($this->modelPath) . '/' . $modelName . '.php';
-        if (file_exists($fileName)) {
-            $fileContents = file_get_contents($fileName);
-            $firstPos = strpos($fileContents, $this->beginBlock);
-            $lastPos = strpos($fileContents, $this->endBlock);
-            if ($firstPos && $lastPos && ($lastPos > $firstPos)) {
-                $oldDoc = $this->getBetweenString($fileContents, $begin, $this->endBlock, false, false);
-                return str_replace($oldDoc, $contents, $fileContents);
-            }
-            return $fileContents;
-        }
-        return '';
-    }
-
-    /**
      * @param $behavior
      * @return mixed
      */
@@ -182,10 +161,9 @@ class ModelDocCode extends CCodeModel
     /**
      * @param $behavior
      * @param array $ignoreMethods
-     * @param array $ignoreProperties
      * @return array
      */
-    public function getBehaviorProperties($behavior, $ignoreMethods = array(), $ignoreProperties = array())
+    public function getBehaviorProperties($behavior, $ignoreMethods = array())
     {
         $properties = array();
 
@@ -213,7 +191,7 @@ class ModelDocCode extends CCodeModel
                 $type = current($paramTypes);
                 $filterType = '';
                 if ($type && strpos($type, '$')) {
-                    $typeString = YdStringHelper::getBetweenString($type, false, '$');
+                    $typeString = $this->getBetweenString($type, false, '$');
                     $typeString = trim($typeString);
                     $filterType = $this->filterDocType($typeString);
                     $filterType = $filterType ? trim($filterType) . ' ' : '';
@@ -329,12 +307,46 @@ class ModelDocCode extends CCodeModel
             $filteredType = str_replace('-', ' ', $filteredType);
             $filteredType = trim($filteredType);
             if (strpos($type, ' ')) {
-                $filteredType = YdStringHelper::getBetweenString($type, false, ' ');
+                $filteredType = $this->getBetweenString($type, false, ' ');
             }
         }
 
         return $filteredType;
 
+    }
+
+    /**
+     * @param $contents
+     * @param $start
+     * @param $end
+     * @param bool $removeStart
+     * @param bool $removeEnd
+     * @return string
+     */
+    static public function getBetweenString($contents, $start, $end, $removeStart = true, $removeEnd = true)
+    {
+        $startPos = $start ? strpos($contents, $start) : 0;
+        if ($startPos === false)
+            return false;
+
+        if ($end) {
+            $endPos = strpos($contents, $end, $startPos);
+            if ($endPos === false) {
+                $endPos = $endPos = strlen($contents);
+            }
+        }
+        else {
+            $endPos = strlen($contents);
+        }
+
+        if ($removeStart) {
+            $startPos += strlen($start);
+        }
+        $len = $endPos - $startPos;
+        if (!$removeEnd && $end && $endPos) {
+            $len = $len + strlen($end);
+        }
+        return substr($contents, $startPos, $len);
     }
 
 }
