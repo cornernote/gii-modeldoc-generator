@@ -1,5 +1,5 @@
 {
-    "name": "mrphp/gii-modeldoc-generator",
+    "name": "cornernote/gii-modeldoc-generator",
     "description": "Gii ModelDoc Generator for Yii framework",
     "type": "library",
     "license": "BSD-3-Clause",
