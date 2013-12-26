@@ -44,7 +44,7 @@ Please download using ONE of the following methods:
 
 ```
 curl http://getcomposer.org/installer | php
-php composer.phar require mrphp/gii-modeldoc-generator
+php composer.phar require cornernote/gii-modeldoc-generator
 ```
 
 
@@ -63,7 +63,7 @@ return array(
 		'gii' => array(
 			'class'=>'system.gii.GiiModule',
 			'generatorPaths' => array(
-				'vendor.mrphp.gii-modeldoc-generator',
+				'vendor.cornernote.gii-modeldoc-generator',
 				//'ext.gii-modeldoc-generator', // if you downloaded into ext
 			),
 		),
