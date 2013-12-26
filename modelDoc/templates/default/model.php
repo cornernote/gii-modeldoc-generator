@@ -53,7 +53,7 @@ if ($relations) {
 $properties[] = ' * @see CActiveRecord';
 if ($this->addModelMethodDoc)
     $properties[] = " * @method {$modelClass} model() static model(string \$className = NULL)";
-$properties[] = " * @method {$modelClass} find() find(\$condition, array \$params = array())";
+$properties[] = " * @method {$modelClass} find() find(\$condition = '', array \$params = array())";
 $properties[] = " * @method {$modelClass} findByPk() findByPk(\$pk, \$condition = '', array \$params = array())";
 $properties[] = " * @method {$modelClass} findByAttributes() findByAttributes(array \$attributes, \$condition = '', array \$params = array())";
 $properties[] = " * @method {$modelClass} findBySql() findBySql(\$sql, array \$params = array())";
