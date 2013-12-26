@@ -109,5 +109,5 @@ This extension will not create any new model files.  You should first create the
 ## Links
 
 - [Yii Extension](http://www.yiiframework.com/extension/gii-modeldoc-generator)
-- [Composer Package](https://packagist.org/packages/mrphp/gii-modeldoc-generator)
+- [Composer Package](https://packagist.org/packages/cornernote/gii-modeldoc-generator)
 - [MrPHP](http://mrphp.com.au)
