@@ -80,7 +80,7 @@ if ($behaviors) {
 
     foreach ($behaviors as $behavior) {
         $behavior = $this->getBehaviorClass($behavior);
-        $behaviorProperties = $this->getBehaviorProperties($behavior, CMap::mergeArray($behaviorMethods, $selfMethods), CMap::mergeArray($behaviorProperties, $selfProperties));
+        $behaviorProperties = $this->getBehaviorProperties($modelClass, $behavior, CMap::mergeArray($behaviorMethods, $selfMethods), CMap::mergeArray($behaviorProperties, $selfProperties));
         if ($behaviorProperties) {
             $properties[] = ' * @see ' . $behavior;
             foreach ($behaviorProperties as $behaviorProperty) {

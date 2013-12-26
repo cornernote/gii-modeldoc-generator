@@ -159,11 +159,12 @@ class ModelDocCode extends CCodeModel
     }
 
     /**
+     * @param $modelName
      * @param $behavior
      * @param array $ignoreMethods
      * @return array
      */
-    public function getBehaviorProperties($behavior, $ignoreMethods = array())
+    public function getBehaviorProperties($modelClass, $behavior, $ignoreMethods = array())
     {
         $properties = array();
 
@@ -208,6 +209,7 @@ class ModelDocCode extends CCodeModel
                 $separator = ', ';
             }
             $property .= ")";
+            $property = str_replace('CActiveRecord', $modelClass, $property);
             $properties[] = $property;
 
         }
