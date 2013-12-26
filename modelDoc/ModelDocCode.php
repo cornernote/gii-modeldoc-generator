@@ -175,6 +175,7 @@ class ModelDocCode extends CCodeModel
         //}
 
         // methods
+        $ignoreMethods['__destruct'] = '__destruct';
         foreach (get_class_methods($behavior) as $methodName) {
             if (isset($ignoreMethods[$methodName]))
                 continue;
