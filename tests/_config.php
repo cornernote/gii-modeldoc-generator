@@ -38,7 +38,6 @@
             'generatorPaths' => array(
                 'gii-modeldoc-generator.gii',
             ),
-            'ipFilters' => array('127.0.0.1'),
             'password' => false,
         ),
     ),
