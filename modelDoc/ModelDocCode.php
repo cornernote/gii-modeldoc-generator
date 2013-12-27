@@ -94,10 +94,17 @@ class ModelDocCode extends CCodeModel
                 'model' => $model,
                 'modelClass' => $modelClass,
             );
-            $this->files[] = new CCodeFile(
-                Yii::getPathOfAlias($this->modelPath) . '/' . $modelClass . '.php',
-                $this->render($templatePath . '/model.php', $params)
-            );
+            //wrap the lines below in a try..catch block so execution
+            //continues with next model file if an error occurs
+            try {
+                $this->files[] = new CCodeFile(
+                    Yii::getPathOfAlias($this->modelPath) . '/' . $modelClass . '.php',
+                    $this->render($templatePath . '/model.php', $params)
+                );
+            } catch (Exception $ex) {
+                // continue with next model file, we could also do some logging here
+                continue;
+            }
         }
     }
 
