@@ -83,7 +83,7 @@ return array(
 
 ## Usage
 
-Ensure you have `--- BEGIN GenerateProperties ---` and `--- END GenerateProperties ---` in each of your models, for example:
+Ensure you have `--- BEGIN ModelDoc ---` and `--- END ModelDoc ---` in each of your models, for example:
 
 ```php
 /**
