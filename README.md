@@ -61,17 +61,12 @@ Add the path to gii-modeldoc-generator to the `generatorPaths` in your gii confi
 
 ```php
 return array(
-	'aliases' => array(
-		// set this so Yii knows where composers vendor folder is located
-		// only needed if you want to use the composer vendor alias below
-		'vendor' => '/path/to/vendor',
-	),
 	'modules' => array(
 		'gii' => array(
 			'class'=>'system.gii.GiiModule',
 			'generatorPaths' => array(
 				// use this if you installed with composer
-				'vendor.cornernote.gii-modeldoc-generator.gii',
+				'/path/to/vendor/cornernote/gii-modeldoc-generator/gii',
 
 				// OR, use this if you downloaded into your extensions folder
 				//'ext.gii-modeldoc-generator.gii',
