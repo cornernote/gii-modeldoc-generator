@@ -68,10 +68,10 @@ return array(
 			'class'=>'system.gii.GiiModule',
 			'generatorPaths' => array(
 				// use this if you installed with composer
-				'vendor.cornernote.gii-modeldoc-generator',
+				'vendor.cornernote.gii-modeldoc-generator.gii',
 
 				// OR, use this if you downloaded into your extensions folder
-				//'ext.gii-modeldoc-generator',
+				//'ext.gii-modeldoc-generator.gii',
 			),
 		),
 	),
