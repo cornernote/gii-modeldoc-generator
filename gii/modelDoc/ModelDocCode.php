@@ -120,13 +120,22 @@ class ModelDocCode extends CCodeModel
         $files = CFileHelper::findFiles(Yii::getPathOfAlias($this->modelPath), array('fileTypes' => array('php'), 'level' => 0));
         foreach ($files as $file) {
             $modelClass = basename($file, '.php');
+
             // there is dot in modelName [$modelClass] probably a version conflict file
             if (strpos($modelClass, '.') !== false)
                 continue;
+
+            //use reflection to check if class is instantiable
+            $reflectedClass = new ReflectionClass($modelClass);
+            if ($reflectedClass->isInstantiable() === false)
+                continue; //continue if this class is not instantiable
+
             // load the model
             $model = new $modelClass;
             if (!$model || !is_subclass_of($model, 'CActiveRecord'))
                 continue;
+
+            // everything passes, add it to the list
             $modelList[] = $model;
         }
         return $modelList;
