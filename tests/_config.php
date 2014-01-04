@@ -22,7 +22,7 @@
     ),
     'components' => array(
         'assetManager' => array(
-            'basePath' => realpath(BASE_PATH . '/_public/assets'),
+            'basePath' => realpath(BASE_PATH . '/_www/assets'),
         ),
         'db' => array(
             'connectionString' => 'sqlite:' . realpath(BASE_PATH . '/_runtime') . '/test.db',
