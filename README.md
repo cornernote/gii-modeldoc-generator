@@ -97,15 +97,6 @@ Visit `index.php?r=gii`, then choose ModelDoc from the menu.
 This extension will not create any new model files.  You should first create them or generate them with a model generator.
 
 
-## License
-
-- Author: Brett O'Donnell <cornernote@gmail.com>
-- Author: Zain Ul abidin <zainengineer@gmail.com>
-- Source Code: https://github.com/cornernote/gii-modeldoc-generator
-- Copyright © 2013 Mr PHP <info@mrphp.com.au>
-- License: BSD-3-Clause https://raw.github.com/cornernote/gii-modeldoc-generator/master/LICENSE
-
-
 ## Resources
 
 [![Mr PHP](https://raw.github.com/cornernote/mrphp-assets/master/img/code-banner.png)](http://mrphp.com.au) [![Github Project](https://raw.github.com/cornernote/mrphp-assets/master/vendor/github/github-latest-sourcecode-16.png)](https://github.com/cornernote/gii-modeldoc-generator#gii-modeldoc-generator-for-yii) [![Yii Extension](https://raw.github.com/cornernote/mrphp-assets/master/vendor/yii/yii-extension-16.png)](http://www.yiiframework.com/extension/gii-modeldoc-generator) [![Project Stats](https://www.ohloh.net/p/gii-modeldoc-generator/widgets/project_thin_badge.gif)](https://www.ohloh.net/p/gii-modeldoc-generator)
