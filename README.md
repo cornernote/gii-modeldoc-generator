@@ -40,20 +40,32 @@ Please download using ONE of the following methods:
 
 ### Composer Installation
 
+All requirements are automatically downloaded into the correct location when using composer.  There is no need to download additional files or set paths to third party files.
+
+Get composer:
+
 ```
 curl http://getcomposer.org/installer | php
-php composer.phar require cornernote/gii-modeldoc-generator
 ```
+
+Install latest release OR development version:
+
+```
+php composer.phar require cornernote/gii-modeldoc-generator:*				// latest release
+php composer.phar require cornernote/gii-modeldoc-generator:dev-master	// development version
+```
+
+Add the `vendor` folder to the `aliases` in your yii configuration:
 
 
 ### Manual Installation
 
-Download the [latest version](https://github.com/cornernote/gii-modeldoc-generator/archive/master.zip) and move the `gii-modeldoc-generator` folder into your `protected/extensions` folder.
+Download the [latest release](https://github.com/cornernote/gii-modeldoc-generator/releases/latest) or [development version](https://github.com/cornernote/gii-modeldoc-generator/archive/master.zip) and move the `audit` folder into your `protected/modules` folder.
 
 
 ## Configuration
 
-Add the path to gii-modeldoc-generator to the `generatorPaths` in your gii configuration:
+Add the path to `gii-modeldoc-generator` to the `generatorPaths` in your gii configuration:
 
 ```php
 return array(
