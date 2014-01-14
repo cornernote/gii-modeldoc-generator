@@ -33,5 +33,13 @@ $class = get_class($model);
     </div>
     <?php echo $form->error($model, 'modelPath'); ?>
 </div>
+<div class="row checkbox">
+    <?php echo $form->label($model, 'addModelMethodDoc'); ?>
+    <?php echo $form->checkbox($model, 'addModelMethodDoc'); ?>
+    <div class="tooltip">
+        Adds a method doc for the model function.
+    </div>
+    <?php echo $form->error($model, 'addModelMethodDoc'); ?>
+</div>
 
 <?php $this->endWidget(); ?>

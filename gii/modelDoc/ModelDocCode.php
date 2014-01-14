@@ -48,6 +48,7 @@ class ModelDocCode extends CCodeModel
             array('modelClass', 'match', 'pattern' => '/^[a-zA-Z_]\w*$/', 'message' => '{attribute} should only contain word characters.'),
             array('modelPath', 'validateModelPath', 'skipOnError' => true),
             array('modelPath', 'sticky'),
+            array('addModelMethodDoc', 'numerical', 'integerOnly' => true),
         ));
     }
 
