@@ -132,7 +132,11 @@ class ModelDocCode extends CCodeModel
                 continue; //continue if this class is not instantiable
 
             // load the model
-            $model = new $modelClass;
+            try {
+                $model = new $modelClass;
+            } catch (Exception $e) {
+                $model = null;
+            }
             if (!$model || !is_subclass_of($model, 'CActiveRecord'))
                 continue;
 
