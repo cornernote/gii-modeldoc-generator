@@ -71,22 +71,30 @@ $properties[] = " *";
 // behaviors
 $behaviors = $model->behaviors();
 if ($behaviors) {
-    $behaviorMethods = array();
-    foreach (get_class_methods('CActiveRecordBehavior') as $methodName)
-        $behaviorMethods[$methodName] = $methodName;
-    $behaviorProperties = array();
-    foreach (get_class_vars('CActiveRecordBehavior') as $propertyName)
-        $behaviorProperties[$propertyName] = $propertyName;
+    if ($this->useMixin) {
+        foreach ($behaviors as $behavior) {
+            $properties[] = ' * @mixin ' . $this->getBehaviorClass($behavior);
+        }
+        $properties[] = ' *';
+    } else {
+        $behaviorMethods = array();
+        foreach (get_class_methods('CActiveRecordBehavior') as $methodName)
+            $behaviorMethods[$methodName] = $methodName;
+        $behaviorProperties = array();
+        foreach (get_class_vars('CActiveRecordBehavior') as $propertyName)
+            $behaviorProperties[$propertyName] = $propertyName;
 
-    foreach ($behaviors as $behavior) {
-        $behavior = $this->getBehaviorClass($behavior);
-        $behaviorProperties = $this->getBehaviorProperties($modelClass, $behavior, CMap::mergeArray($behaviorMethods, $selfMethods), CMap::mergeArray($behaviorProperties, $selfProperties));
-        if ($behaviorProperties) {
-            $properties[] = ' * @see ' . $behavior;
-            foreach ($behaviorProperties as $behaviorProperty) {
-                $properties[] = $behaviorProperty;
+        foreach ($behaviors as $behavior) {
+            $behavior = $this->getBehaviorClass($behavior);
+
+            $behaviorProperties = $this->getBehaviorProperties($modelClass, $behavior, CMap::mergeArray($behaviorMethods, $selfMethods), CMap::mergeArray($behaviorProperties, $selfProperties));
+            if ($behaviorProperties) {
+                $properties[] = ' * @see ' . $behavior;
+                foreach ($behaviorProperties as $behaviorProperty) {
+                    $properties[] = $behaviorProperty;
+                }
+                $properties[] = ' *';
             }
-            $properties[] = ' *';
         }
     }
 }

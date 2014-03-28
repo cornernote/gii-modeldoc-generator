@@ -41,5 +41,13 @@ $class = get_class($model);
     </div>
     <?php echo $form->error($model, 'addModelMethodDoc'); ?>
 </div>
+<div class="row checkbox">
+	<?php echo $form->label($model, 'useMixin'); ?>
+	<?php echo $form->checkbox($model, 'useMixin'); ?>
+	<div class="tooltip">
+		Use @mixin doc for behaviors.
+	</div>
+	<?php echo $form->error($model, 'useMixin'); ?>
+</div>
 
 <?php $this->endWidget(); ?>
