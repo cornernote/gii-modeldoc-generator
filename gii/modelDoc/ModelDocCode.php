@@ -12,7 +12,7 @@
 class ModelDocCode extends CCodeModel
 {
     /**
-     * @var
+     * @var string
      */
     public $modelClass;
 
@@ -22,9 +22,14 @@ class ModelDocCode extends CCodeModel
     public $modelPath = 'application.models';
 
     /**
-     * @var
+     * @var int
      */
     public $addModelMethodDoc;
+
+    /**
+     * @var int
+     */
+    public $useMixin;
 
     /**
      * @var string
@@ -47,8 +52,8 @@ class ModelDocCode extends CCodeModel
             array('modelPath', 'match', 'pattern' => '/^(\w+[\w\.]*|\*?|\w+\.\*)$/', 'message' => '{attribute} should only contain word characters, dots, and an optional ending asterisk.'),
             array('modelClass', 'match', 'pattern' => '/^[a-zA-Z_]\w*$/', 'message' => '{attribute} should only contain word characters.'),
             array('modelPath', 'validateModelPath', 'skipOnError' => true),
-            array('modelPath', 'sticky'),
-            array('addModelMethodDoc', 'numerical', 'integerOnly' => true),
+            array('modelPath,addModelMethodDoc,useMixin', 'sticky'),
+            array('addModelMethodDoc,useMixin', 'numerical', 'integerOnly' => true),
         ));
     }
 
@@ -60,6 +65,7 @@ class ModelDocCode extends CCodeModel
         return array_merge(parent::attributeLabels(), array(
             'modelPath' => 'Model Path',
             'modelClass' => 'Model Class',
+            'useMixin' => 'Use @mixin doc for behaviors'
         ));
     }
 
@@ -180,7 +186,7 @@ class ModelDocCode extends CCodeModel
     }
 
     /**
-     * @param $modelName
+     * @param $modelClass
      * @param $behavior
      * @param array $ignoreMethods
      * @return array
@@ -204,7 +210,7 @@ class ModelDocCode extends CCodeModel
             $methodReturn = $this->getTypeFromDocComment($behavior, $methodName, 'return');
             $paramTypes = $this->getDocComment($behavior, $methodName, 'param');
             $methodReturn = $methodReturn ? current($methodReturn) . ' ' : '';
-            $property = " * @method $methodReturn $methodName(";
+            $property = " * @method {$methodReturn}{$methodName}(";
             $r = new ReflectionMethod($behavior, $methodName);
             $params = $r->getParameters();
             $separator = '';
