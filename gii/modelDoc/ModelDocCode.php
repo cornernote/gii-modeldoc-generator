@@ -204,7 +204,7 @@ class ModelDocCode extends CCodeModel
             $methodReturn = $this->getTypeFromDocComment($behavior, $methodName, 'return');
             $paramTypes = $this->getDocComment($behavior, $methodName, 'param');
             $methodReturn = $methodReturn ? current($methodReturn) . ' ' : '';
-            $property = " * @method $methodReturn$methodName() $methodName(";
+            $property = " * @method $methodReturn $methodName(";
             $r = new ReflectionMethod($behavior, $methodName);
             $params = $r->getParameters();
             $separator = '';
