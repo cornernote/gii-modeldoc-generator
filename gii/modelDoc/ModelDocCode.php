@@ -29,7 +29,7 @@ class ModelDocCode extends CCodeModel
     /**
      * @var int
      */
-    public $useMixin;
+    public $useMixin = 1;
 
     /**
      * @var string
