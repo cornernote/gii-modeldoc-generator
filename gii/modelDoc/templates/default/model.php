@@ -56,16 +56,16 @@ if ($relations) {
 // active record
 $properties[] = ' * @see CActiveRecord';
 if ($this->addModelMethodDoc)
-    $properties[] = " * @method {$modelClass} model() static model(string \$className = NULL)";
-$properties[] = " * @method {$modelClass} find() find(\$condition = '', array \$params = array())";
-$properties[] = " * @method {$modelClass} findByPk() findByPk(\$pk, \$condition = '', array \$params = array())";
-$properties[] = " * @method {$modelClass} findByAttributes() findByAttributes(array \$attributes, \$condition = '', array \$params = array())";
-$properties[] = " * @method {$modelClass} findBySql() findBySql(\$sql, array \$params = array())";
-$properties[] = " * @method {$modelClass}[] findAll() findAll(\$condition = '', array \$params = array())";
-$properties[] = " * @method {$modelClass}[] findAllByPk() findAllByPk(\$pk, \$condition = '', array \$params = array())";
-$properties[] = " * @method {$modelClass}[] findAllByAttributes() findAllByAttributes(array \$attributes, \$condition = '', array \$params = array())";
-$properties[] = " * @method {$modelClass}[] findAllBySql() findAllBySql(\$sql, array \$params = array())";
-$properties[] = " * @method {$modelClass} with() with()";
+    $properties[] = " * @method {$modelClass} static model(string \$className = NULL)";
+$properties[] = " * @method {$modelClass} find(\$condition = '', array \$params = array())";
+$properties[] = " * @method {$modelClass} findByPk(\$pk, \$condition = '', array \$params = array())";
+$properties[] = " * @method {$modelClass} findByAttributes(array \$attributes, \$condition = '', array \$params = array())";
+$properties[] = " * @method {$modelClass} fndBySql(\$sql, array \$params = array())";
+$properties[] = " * @method {$modelClass}[] findAll(\$condition = '', array \$params = array())";
+$properties[] = " * @method {$modelClass}[] findAllByPk(\$pk, \$condition = '', array \$params = array())";
+$properties[] = " * @method {$modelClass}[] findAllByAttributes(array \$attributes, \$condition = '', array \$params = array())";
+$properties[] = " * @method {$modelClass}[] findAllBySql(\$sql, array \$params = array())";
+$properties[] = " * @method {$modelClass} with()";
 $properties[] = " *";
 
 // behaviors
