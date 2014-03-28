@@ -56,7 +56,7 @@ if ($relations) {
 // active record
 $properties[] = ' * @see CActiveRecord';
 if ($this->addModelMethodDoc)
-    $properties[] = " * @method {$modelClass} static model(string \$className = NULL)";
+    $properties[] = " * @method static {$modelClass} model(string \$className = NULL)";
 $properties[] = " * @method {$modelClass} find(\$condition = '', array \$params = array())";
 $properties[] = " * @method {$modelClass} findByPk(\$pk, \$condition = '', array \$params = array())";
 $properties[] = " * @method {$modelClass} findByAttributes(array \$attributes, \$condition = '', array \$params = array())";
