@@ -82,6 +82,12 @@ $properties[] = " * @method {$modelClass}[] findAllByPk(\$pk, \$condition = '', 
 $properties[] = " * @method {$modelClass}[] findAllByAttributes(array \$attributes, \$condition = '', array \$params = array())";
 $properties[] = " * @method {$modelClass}[] findAllBySql(\$sql, array \$params = array())";
 $properties[] = " * @method {$modelClass} with()";
+$properties[] = " * @method {$modelClass} together()";
+$properties[] = " * @method {$modelClass} cache(\$duration, \$dependency = null, \$queryCount = 1)";
+$properties[] = " * @method {$modelClass} resetScope(\$resetDefault = true)";
+$properties[] = " * @method {$modelClass} populateRecord(\$attributes, \$callAfterFind = true)";
+$properties[] = " * @method {$modelClass}[] populateRecords(\$data, \$callAfterFind = true, \$index = null)";
+
 $properties[] = " *";
 
 // behaviors
