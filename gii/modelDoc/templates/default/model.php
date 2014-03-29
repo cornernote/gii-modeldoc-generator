@@ -59,6 +59,16 @@ if ($relations) {
     $properties[] = ' *';
 }
 
+// scopes
+$scopes = $model->scopes();
+if ($scopes) {
+    $properties[] = ' * Scopes';
+    foreach (array_keys($scopes) as $scopeName) {
+        $properties[] = " * @method {$modelClass} {$scopeName}()";
+    }
+    $properties[] = ' *';
+}
+
 // active record
 $properties[] = ' * @see CActiveRecord';
 if ($this->addModelMethodDoc)
