@@ -29,7 +29,13 @@ foreach ($model->tableSchema->columns as $column) {
     if (strpos($column->dbType, 'decimal') !== false) {
         $type = 'number';
     }
-    $properties[] = ' * @property ' . $type . ' $' . $column->name;
+    if($this->addColumnComments && !empty($column->comment)) {
+        $comment = preg_replace('/[\r\n]+/u', ' ', $column->comment);
+        $comment = ' ' . mb_substr($comment, 0, 100);
+    } else {
+        $comment = '';
+    }
+    $properties[] = ' * @property ' . $type . ' $' . $column->name . $comment;
 }
 $properties[] = ' *';
 

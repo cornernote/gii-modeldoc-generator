@@ -32,6 +32,11 @@ class ModelDocCode extends CCodeModel
     public $useMixin = 1;
 
     /**
+     * @var int
+     */
+    public $addColumnComments;
+
+    /**
      * @var string
      */
     public $beginBlock = ' * --- BEGIN ModelDoc ---';
@@ -42,7 +47,7 @@ class ModelDocCode extends CCodeModel
     public $endBlock = ' * --- END ModelDoc ---';
 
     /**
-     * @return array
+     * @inheritdoc
      */
     public function rules()
     {
@@ -52,25 +57,26 @@ class ModelDocCode extends CCodeModel
             array('modelPath', 'match', 'pattern' => '/^(\w+[\w\.]*|\*?|\w+\.\*)$/', 'message' => '{attribute} should only contain word characters, dots, and an optional ending asterisk.'),
             array('modelClass', 'match', 'pattern' => '/^[a-zA-Z_]\w*$/', 'message' => '{attribute} should only contain word characters.'),
             array('modelPath', 'validateModelPath', 'skipOnError' => true),
-            array('modelPath,addModelMethodDoc,useMixin', 'sticky'),
-            array('addModelMethodDoc,useMixin', 'numerical', 'integerOnly' => true),
+            array('modelPath,addModelMethodDoc,useMixin,addColumnComments', 'sticky'),
+            array('addModelMethodDoc,useMixin,addColumnComments', 'numerical', 'integerOnly' => true),
         ));
     }
 
     /**
-     * @return array
+     * @inheritdoc
      */
     public function attributeLabels()
     {
         return array_merge(parent::attributeLabels(), array(
             'modelPath' => 'Model Path',
             'modelClass' => 'Model Class',
-            'useMixin' => 'Use @mixin doc for behaviors'
+            'useMixin' => 'Use @mixin tag for behaviors',
+            'addColumnComments' => 'Add column comments'
         ));
     }
 
     /**
-     * @return array
+     * @inheritdoc
      */
     public function requiredTemplates()
     {
@@ -89,7 +95,7 @@ class ModelDocCode extends CCodeModel
     }
 
     /**
-     *
+     * @inheritdoc
      */
     public function prepare()
     {
@@ -301,7 +307,7 @@ class ModelDocCode extends CCodeModel
     }
 
     /**
-     * @param $type
+     * @param string $type
      * @return mixed|string
      */
     public function filterDocType($type)
