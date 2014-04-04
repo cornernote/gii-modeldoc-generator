@@ -138,6 +138,8 @@ class ModelDocCode extends CCodeModel
             if (strpos($modelClass, '.') !== false)
                 continue;
 
+			Yii::import($this->modelPath . '.' . $modelClass);
+
             //use reflection to check if class is instantiable
             $reflectedClass = new ReflectionClass($modelClass);
             if ($reflectedClass->isInstantiable() === false)
