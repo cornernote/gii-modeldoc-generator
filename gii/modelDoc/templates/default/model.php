@@ -2,9 +2,10 @@
 /**
  * This is the template for generating the phpdocs of a specified model.
  *
- * @var $this ModelDocCode
- * @var $modelClass string
- * @var $model CActiveRecord
+ * @var ModelDocCode $this
+ * @var CActiveRecord $model
+ * @var ReflectionClass $reflection
+ *
  *
  * @author Brett O'Donnell <cornernote@gmail.com>
  * @author Zain Ul abidin <zainengineer@gmail.com>
@@ -15,7 +16,7 @@
 $properties = array(' *');
 
 // get own methods and properties
-$reflection = new ReflectionClass($modelClass);
+$modelClass = $reflection->getShortName();
 $selfMethods = CHtml::listData($reflection->getMethods(), 'name', 'name');
 $selfProperties = CHtml::listData($reflection->getProperties(), 'name', 'name');
 
@@ -29,7 +30,13 @@ foreach ($model->tableSchema->columns as $column) {
     if (strpos($column->dbType, 'decimal') !== false) {
         $type = 'number';
     }
-    $properties[] = ' * @property ' . $type . ' $' . $column->name;
+    if($this->addColumnComments && !empty($column->comment)) {
+        $comment = preg_replace('/[\r\n]+/u', ' ', $column->comment);
+        $comment = ' ' . mb_substr($comment, 0, 100);
+    } else {
+        $comment = '';
+    }
+    $properties[] = ' * @property ' . $type . ' $' . $column->name . $comment;
 }
 $properties[] = ' *';
 
@@ -38,25 +45,35 @@ $relations = $model->relations();
 if ($relations) {
     $properties[] = ' * Relations';
     foreach ($relations as $relationName => $relation) {
-        if (in_array($relation[0], array('CBelongsToRelation', 'CHasOneRelation')))
-            $properties[] = ' * @property ' . $relation[1] . ' $' . $relationName;
-
-        elseif (in_array($relation[0], array('CHasManyRelation', 'CManyManyRelation')))
-            $properties[] = ' * @property ' . $relation[1] . '[] $' . $relationName;
-
-        elseif (in_array($relation[0], array('CStatRelation')))
+        if (in_array($relation[0], array('CBelongsToRelation', 'CHasOneRelation'))) {
+            $relationClass = $relation[1][0] == '\\' ? $relation[1] : '\\' . $relation[1];
+            $properties[] = ' * @property ' . $relationClass . ' $' . $relationName;
+        } elseif (in_array($relation[0], array('CHasManyRelation', 'CManyManyRelation'))) {
+            $relationClass = $relation[1][0] == '\\' ? $relation[1] : '\\' . $relation[1];
+            $properties[] = ' * @property ' . $relationClass . '[] $' . $relationName;
+        } elseif (in_array($relation[0], array('CStatRelation'))) {
             $properties[] = ' * @property integer $' . $relationName;
-
-        else
+        } else {
             $properties[] = ' * @property unknown $' . $relationName;
+        }
+    }
+    $properties[] = ' *';
+}
+
+// scopes
+$scopes = $model->scopes();
+if ($scopes) {
+    $properties[] = ' * Scopes';
+    foreach (array_keys($scopes) as $scopeName) {
+        $properties[] = " * @method {$modelClass} {$scopeName}()";
     }
     $properties[] = ' *';
 }
 
 // active record
-$properties[] = ' * @see CActiveRecord';
+$properties[] = ' * @see \CActiveRecord';
 if ($this->addModelMethodDoc)
-    $properties[] = " * @method static {$modelClass} model(string \$className = NULL)";
+    $properties[] = " * @method static {$modelClass} model(string \$className = null)";
 $properties[] = " * @method {$modelClass} find(\$condition = '', array \$params = array())";
 $properties[] = " * @method {$modelClass} findByPk(\$pk, \$condition = '', array \$params = array())";
 $properties[] = " * @method {$modelClass} findByAttributes(array \$attributes, \$condition = '', array \$params = array())";
@@ -66,6 +83,12 @@ $properties[] = " * @method {$modelClass}[] findAllByPk(\$pk, \$condition = '', 
 $properties[] = " * @method {$modelClass}[] findAllByAttributes(array \$attributes, \$condition = '', array \$params = array())";
 $properties[] = " * @method {$modelClass}[] findAllBySql(\$sql, array \$params = array())";
 $properties[] = " * @method {$modelClass} with()";
+$properties[] = " * @method {$modelClass} together()";
+$properties[] = " * @method {$modelClass} cache(\$duration, \$dependency = null, \$queryCount = 1)";
+$properties[] = " * @method {$modelClass} resetScope(\$resetDefault = true)";
+$properties[] = " * @method {$modelClass} populateRecord(\$attributes, \$callAfterFind = true)";
+$properties[] = " * @method {$modelClass}[] populateRecords(\$data, \$callAfterFind = true, \$index = null)";
+
 $properties[] = " *";
 
 // behaviors
@@ -100,7 +123,7 @@ if ($behaviors) {
 }
 
 // output the contents
-$content = $this->getContent($modelClass);
+$content = $this->getContent($reflection->getName());
 echo $content[0];
 echo $this->beginBlock . "\n";
 echo implode("\n", $properties) . "\n";

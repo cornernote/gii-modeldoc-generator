@@ -32,6 +32,11 @@ class ModelDocCode extends CCodeModel
     public $useMixin = 1;
 
     /**
+     * @var int
+     */
+    public $addColumnComments;
+
+    /**
      * @var string
      */
     public $beginBlock = ' * --- BEGIN ModelDoc ---';
@@ -42,35 +47,36 @@ class ModelDocCode extends CCodeModel
     public $endBlock = ' * --- END ModelDoc ---';
 
     /**
-     * @return array
+     * @inheritdoc
      */
     public function rules()
     {
         return array_merge(parent::rules(), array(
             array('modelClass, modelPath', 'filter', 'filter' => 'trim'),
             array('modelPath', 'required'),
-            array('modelPath', 'match', 'pattern' => '/^(\w+[\w\.]*|\*?|\w+\.\*)$/', 'message' => '{attribute} should only contain word characters, dots, and an optional ending asterisk.'),
+            array('modelPath', 'match', 'pattern' => '/^(\w+[\w\.]*)$/', 'message' => '{attribute} should only contain word characters and dots.'),
             array('modelClass', 'match', 'pattern' => '/^[a-zA-Z_]\w*$/', 'message' => '{attribute} should only contain word characters.'),
             array('modelPath', 'validateModelPath', 'skipOnError' => true),
-            array('modelPath,addModelMethodDoc,useMixin', 'sticky'),
-            array('addModelMethodDoc,useMixin', 'numerical', 'integerOnly' => true),
+            array('modelPath,addModelMethodDoc,useMixin,addColumnComments', 'sticky'),
+            array('addModelMethodDoc,useMixin,addColumnComments', 'numerical', 'integerOnly' => true),
         ));
     }
 
     /**
-     * @return array
+     * @inheritdoc
      */
     public function attributeLabels()
     {
         return array_merge(parent::attributeLabels(), array(
             'modelPath' => 'Model Path',
             'modelClass' => 'Model Class',
-            'useMixin' => 'Use @mixin doc for behaviors'
+            'useMixin' => 'Use @mixin tag for behaviors',
+            'addColumnComments' => 'Add column comments'
         ));
     }
 
     /**
-     * @return array
+     * @inheritdoc
      */
     public function requiredTemplates()
     {
@@ -89,23 +95,24 @@ class ModelDocCode extends CCodeModel
     }
 
     /**
-     *
+     * @inheritdoc
      */
     public function prepare()
     {
         $this->files = array();
         $templatePath = $this->templatePath;
         foreach ($this->getModels() as $model) {
-            $modelClass = get_class($model);
+            $reflection = new ReflectionClass($model);
             $params = array(
                 'model' => $model,
-                'modelClass' => $modelClass,
+                'reflection' => $reflection,
             );
+
             //wrap the lines below in a try..catch block so execution
             //continues with next model file if an error occurs
             try {
                 $this->files[] = new CCodeFile(
-                    Yii::getPathOfAlias($this->modelPath) . '/' . $modelClass . '.php',
+                    $reflection->getFileName(),
                     $this->render($templatePath . '/model.php', $params)
                 );
             } catch (Exception $ex) {
@@ -120,17 +127,28 @@ class ModelDocCode extends CCodeModel
      */
     public function getModels()
     {
-        $modelClass = $this->modelClass;
-        if ($modelClass)
+        if ($this->modelClass) {
+            // try namespace first
+            $modelClass = '\\' . str_replace('.', '\\', $this->modelPath . '.' . $this->modelClass);
+            if (!Yii::autoload($modelClass)) {
+                $modelClass = $this->modelClass;
+            }
             return array(CActiveRecord::model($modelClass));
+        }
         $modelList = array();
         $files = CFileHelper::findFiles(Yii::getPathOfAlias($this->modelPath), array('fileTypes' => array('php'), 'level' => 0));
         foreach ($files as $file) {
-            $modelClass = basename($file, '.php');
+            $fileName = basename($file, '.php');
 
-            // there is dot in modelName [$modelClass] probably a version conflict file
-            if (strpos($modelClass, '.') !== false)
+            // there is a dot in file name, probably a version conflict file
+            if (strpos($fileName, '.') !== false)
                 continue;
+
+            // try namespace first
+            $modelClass = '\\' . str_replace('.', '\\', $this->modelPath . '.' . $fileName);
+            if (!Yii::autoload($modelClass)) {
+                $modelClass = $fileName;
+            }
 
             //use reflection to check if class is instantiable
             $reflectedClass = new ReflectionClass($modelClass);
@@ -159,7 +177,8 @@ class ModelDocCode extends CCodeModel
      */
     public function getContent($modelClass)
     {
-        $file = Yii::getPathOfAlias($this->modelPath) . '/' . $modelClass . '.php';
+        $reflectedClass = new ReflectionClass($modelClass);
+        $file = $reflectedClass->getFileName();
         if (!file_exists($file))
             throw new CException(strtr(Yii::t('modelDocGenerator', 'File :file was not found.'), array(':file' => $file)));
         $content = file_get_contents($file);
@@ -175,14 +194,15 @@ class ModelDocCode extends CCodeModel
 
     /**
      * @param $behavior
-     * @return mixed
+     * @return string
      */
     public function getBehaviorClass($behavior)
     {
         if (is_array($behavior))
             $behavior = $behavior['class'];
         $behavior = explode('.', $behavior);
-        return $behavior[count($behavior) - 1];
+        $behavior = $behavior[count($behavior) - 1];
+        return $behavior[0] ==  '\\' ? $behavior : '\\' . $behavior;
     }
 
     /**
@@ -301,7 +321,7 @@ class ModelDocCode extends CCodeModel
     }
 
     /**
-     * @param $type
+     * @param string $type
      * @return mixed|string
      */
     public function filterDocType($type)
