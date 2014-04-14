@@ -30,7 +30,7 @@ foreach ($model->tableSchema->columns as $column) {
     if (strpos($column->dbType, 'decimal') !== false) {
         $type = 'number';
     }
-    if($this->addColumnComments && !empty($column->comment)) {
+    if(!empty($column->comment)) {
         $comment = preg_replace('/[\r\n]+/u', ' ', $column->comment);
         $comment = ' ' . mb_substr($comment, 0, 100);
     } else {
@@ -94,36 +94,14 @@ $properties[] = " *";
 // behaviors
 $behaviors = $model->behaviors();
 if ($behaviors) {
-    if ($this->useMixin) {
-        foreach ($behaviors as $behavior) {
-            $properties[] = ' * @mixin ' . $this->getBehaviorClass($behavior);
-        }
-        $properties[] = ' *';
-    } else {
-        $behaviorMethods = array();
-        foreach (get_class_methods('CActiveRecordBehavior') as $methodName)
-            $behaviorMethods[$methodName] = $methodName;
-        $behaviorProperties = array();
-        foreach (get_class_vars('CActiveRecordBehavior') as $propertyName)
-            $behaviorProperties[$propertyName] = $propertyName;
-
-        foreach ($behaviors as $behavior) {
-            $behavior = $this->getBehaviorClass($behavior);
-
-            $behaviorProperties = $this->getBehaviorProperties($modelClass, $behavior, CMap::mergeArray($behaviorMethods, $selfMethods), CMap::mergeArray($behaviorProperties, $selfProperties));
-            if ($behaviorProperties) {
-                $properties[] = ' * @see ' . $behavior;
-                foreach ($behaviorProperties as $behaviorProperty) {
-                    $properties[] = $behaviorProperty;
-                }
-                $properties[] = ' *';
-            }
-        }
+    foreach ($behaviors as $behavior) {
+        $properties[] = ' * @mixin ' . $this->getBehaviorClass($behavior);
     }
+    $properties[] = ' *';
 }
 
 // output the contents
-$content = $this->getContent($reflection->getName());
+$content = $this->getContent($reflection->getFileName());
 echo $content[0];
 echo $this->beginBlock . "\n";
 echo implode("\n", $properties) . "\n";

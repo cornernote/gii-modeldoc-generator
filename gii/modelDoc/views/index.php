@@ -41,21 +41,5 @@ $class = get_class($model);
     </div>
     <?php echo $form->error($model, 'addModelMethodDoc'); ?>
 </div>
-<div class="row checkbox">
-	<?php echo $form->label($model, 'useMixin'); ?>
-	<?php echo $form->checkbox($model, 'useMixin'); ?>
-	<div class="tooltip">
-		Use @mixin tag for behaviors.
-	</div>
-	<?php echo $form->error($model, 'useMixin'); ?>
-</div>
-<div class="row checkbox">
-	<?php echo $form->label($model, 'addColumnComments'); ?>
-	<?php echo $form->checkbox($model, 'addColumnComments'); ?>
-	<div class="tooltip">
-		Add column comments to table field property.
-	</div>
-	<?php echo $form->error($model, 'addColumnComments'); ?>
-</div>
 
 <?php $this->endWidget(); ?>
