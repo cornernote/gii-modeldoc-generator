@@ -19,8 +19,8 @@ ModelDoc Generator will extend Gii too allow you to update your existing models 
 
 - Adds properties for each field in the table.
 - Adds a property for each relation.
-- Adds methods inherited from CActiveRecord
-- Adds methods assigned from each behavior, unless it is defined by the model itself.
+- Adds methods inherited from CActiveRecord.
+- Adds mixin for each behavior.
 - All methods contain full syntax, including params and returns.
 
 
