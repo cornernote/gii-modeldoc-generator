@@ -17,11 +17,22 @@ ModelDoc Generator will extend Gii too allow you to update your existing models 
 
 ## Features
 
-- Adds properties for each field in the table.
-- Adds a property for each relation.
-- Adds methods inherited from CActiveRecord.
-- Adds mixin for each behavior.
-- All methods contain full syntax, including params and returns.
+- **Table Fields**
+  - Adds properties for each field.
+  - Properties are annotated with field comments from the database.
+- **Relations**
+  - Adds a property with a return type for each relation.
+- **CActiveRecord Inheritance**
+  - Adds methods inherited from CActiveRecord including: find(), findByPk(), findByAttributes(), fndBySql(), findAll(), findAllByPk(), findAllByAttributes(), findAllBySql(), with(), together(), cache(), resetScope(), populateRecord() and populateRecords().
+- **Behaviors** 
+  - Adds a property with a return type for each behavior.
+  - Adds methods assigned for behaviors, unless it is defined by the model itself.
+  - Optionally uses @mixin for behaviors.
+- **Scopes**
+  - Adds a method for each scope.
+- **Full Syntax**
+  - All PHPDoc tags contain full syntax including: method params and return types.
+  - All returned models have namespace support.
 
 
 ## Screenshots
