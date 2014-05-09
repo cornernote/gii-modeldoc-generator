@@ -17,6 +17,8 @@ $properties = array(' *');
 
 // get own methods and properties
 $modelClass = $reflection->getShortName();
+if (!$reflection->inNamespace())
+    $modelClass = '\\' . $modelClass;
 $selfMethods = CHtml::listData($reflection->getMethods(), 'name', 'name');
 $selfProperties = CHtml::listData($reflection->getProperties(), 'name', 'name');
 
@@ -69,7 +71,7 @@ $scopes = $model->scopes();
 if ($scopes) {
     $properties[] = ' * Scopes';
     foreach (array_keys($scopes) as $scopeName) {
-        $properties[] = " * @method \\{$modelClass} {$scopeName}()";
+        $properties[] = " * @method {$modelClass} {$scopeName}()";
     }
     $properties[] = ' *';
 }
@@ -77,21 +79,21 @@ if ($scopes) {
 // active record
 $properties[] = ' * @see \CActiveRecord';
 if ($this->addModelMethodDoc)
-    $properties[] = " * @method static \\{$modelClass} model(string \$className = null)";
-$properties[] = " * @method \\{$modelClass} find(\$condition = '', array \$params = array())";
-$properties[] = " * @method \\{$modelClass} findByPk(\$pk, \$condition = '', array \$params = array())";
-$properties[] = " * @method \\{$modelClass} findByAttributes(array \$attributes, \$condition = '', array \$params = array())";
-$properties[] = " * @method \\{$modelClass} fndBySql(\$sql, array \$params = array())";
-$properties[] = " * @method \\{$modelClass}[] findAll(\$condition = '', array \$params = array())";
-$properties[] = " * @method \\{$modelClass}[] findAllByPk(\$pk, \$condition = '', array \$params = array())";
-$properties[] = " * @method \\{$modelClass}[] findAllByAttributes(array \$attributes, \$condition = '', array \$params = array())";
-$properties[] = " * @method \\{$modelClass}[] findAllBySql(\$sql, array \$params = array())";
-$properties[] = " * @method \\{$modelClass} with()";
-$properties[] = " * @method \\{$modelClass} together()";
-$properties[] = " * @method \\{$modelClass} cache(\$duration, \$dependency = null, \$queryCount = 1)";
-$properties[] = " * @method \\{$modelClass} resetScope(\$resetDefault = true)";
-$properties[] = " * @method \\{$modelClass} populateRecord(\$attributes, \$callAfterFind = true)";
-$properties[] = " * @method \\{$modelClass}[] populateRecords(\$data, \$callAfterFind = true, \$index = null)";
+    $properties[] = " * @method static {$modelClass} model(string \$className = null)";
+$properties[] = " * @method {$modelClass} find(\$condition = '', array \$params = array())";
+$properties[] = " * @method {$modelClass} findByPk(\$pk, \$condition = '', array \$params = array())";
+$properties[] = " * @method {$modelClass} findByAttributes(array \$attributes, \$condition = '', array \$params = array())";
+$properties[] = " * @method {$modelClass} fndBySql(\$sql, array \$params = array())";
+$properties[] = " * @method {$modelClass}[] findAll(\$condition = '', array \$params = array())";
+$properties[] = " * @method {$modelClass}[] findAllByPk(\$pk, \$condition = '', array \$params = array())";
+$properties[] = " * @method {$modelClass}[] findAllByAttributes(array \$attributes, \$condition = '', array \$params = array())";
+$properties[] = " * @method {$modelClass}[] findAllBySql(\$sql, array \$params = array())";
+$properties[] = " * @method {$modelClass} with()";
+$properties[] = " * @method {$modelClass} together()";
+$properties[] = " * @method {$modelClass} cache(\$duration, \$dependency = null, \$queryCount = 1)";
+$properties[] = " * @method {$modelClass} resetScope(\$resetDefault = true)";
+$properties[] = " * @method {$modelClass} populateRecord(\$attributes, \$callAfterFind = true)";
+$properties[] = " * @method {$modelClass}[] populateRecords(\$data, \$callAfterFind = true, \$index = null)";
 $properties[] = " *";
 
 // behaviors
