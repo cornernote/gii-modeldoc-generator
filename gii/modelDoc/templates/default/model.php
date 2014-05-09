@@ -97,8 +97,8 @@ $properties[] = " *";
 // behaviors
 $behaviors = $model->behaviors();
 if ($behaviors) {
-    $properties[] = ' * Behaviors';
     if ($this->useMixin) {
+        $properties[] = ' * Behaviors';
         foreach ($behaviors as $behaviorName => $behavior) {
             $behaviorClass = $this->getBehaviorClass($behavior);
             $properties[] = ' * @mixin ' . $behaviorClass;
@@ -117,14 +117,12 @@ if ($behaviors) {
         foreach ($behaviors as $behaviorName => $behavior) {
             $behaviorClass = $this->getBehaviorClass($behavior);
             $behaviorProperties = $this->getBehaviorProperties($modelClass, $behaviorClass, CMap::mergeArray($behaviorMethods, $selfMethods), CMap::mergeArray($behaviorProperties, $selfProperties));
-            if ($behaviorProperties) {
-                $properties[] = ' * @see ' . $behaviorClass;
-                $properties[] = ' * @property ' . $behaviorClass . ' $' . $behaviorName;
-                foreach ($behaviorProperties as $behaviorProperty) {
-                    $properties[] = $behaviorProperty;
-                }
-                $properties[] = ' *';
+            $properties[] = ' * @see ' . $behaviorClass;
+            $properties[] = ' * @property ' . $behaviorClass . ' $' . $behaviorName;
+            foreach ($behaviorProperties as $behaviorProperty) {
+                $properties[] = $behaviorProperty;
             }
+            $properties[] = ' *';
         }
     }
 }
