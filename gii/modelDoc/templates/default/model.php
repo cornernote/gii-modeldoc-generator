@@ -69,7 +69,7 @@ $scopes = $model->scopes();
 if ($scopes) {
     $properties[] = ' * Scopes';
     foreach (array_keys($scopes) as $scopeName) {
-        $properties[] = " * @method {$modelClass} {$scopeName}()";
+        $properties[] = " * @method \\{$modelClass} {$scopeName}()";
     }
     $properties[] = ' *';
 }
@@ -92,15 +92,17 @@ $properties[] = " * @method \\{$modelClass} cache(\$duration, \$dependency = nul
 $properties[] = " * @method \\{$modelClass} resetScope(\$resetDefault = true)";
 $properties[] = " * @method \\{$modelClass} populateRecord(\$attributes, \$callAfterFind = true)";
 $properties[] = " * @method \\{$modelClass}[] populateRecords(\$data, \$callAfterFind = true, \$index = null)";
-
 $properties[] = " *";
 
 // behaviors
 $behaviors = $model->behaviors();
 if ($behaviors) {
+    $properties[] = ' * Behaviors';
     if ($this->useMixin) {
-        foreach ($behaviors as $behavior) {
-            $properties[] = ' * @mixin ' . $this->getBehaviorClass($behavior);
+        foreach ($behaviors as $behaviorName => $behavior) {
+            $behaviorClass = $this->getBehaviorClass($behavior);
+            $properties[] = ' * @mixin ' . $behaviorClass;
+            $properties[] = ' * @property ' . $behaviorClass . ' $' . $behaviorName;
         }
         $properties[] = ' *';
     }
@@ -112,12 +114,12 @@ if ($behaviors) {
         foreach (get_class_vars('CActiveRecordBehavior') as $propertyName)
             $behaviorProperties[$propertyName] = $propertyName;
 
-        foreach ($behaviors as $behavior) {
-            $behavior = $this->getBehaviorClass($behavior);
-
-            $behaviorProperties = $this->getBehaviorProperties($modelClass, $behavior, CMap::mergeArray($behaviorMethods, $selfMethods), CMap::mergeArray($behaviorProperties, $selfProperties));
+        foreach ($behaviors as $behaviorName => $behavior) {
+            $behaviorClass = $this->getBehaviorClass($behavior);
+            $behaviorProperties = $this->getBehaviorProperties($modelClass, $behaviorClass, CMap::mergeArray($behaviorMethods, $selfMethods), CMap::mergeArray($behaviorProperties, $selfProperties));
             if ($behaviorProperties) {
-                $properties[] = ' * @see ' . $behavior;
+                $properties[] = ' * @see ' . $behaviorClass;
+                $properties[] = ' * @property ' . $behaviorClass . ' $' . $behaviorName;
                 foreach ($behaviorProperties as $behaviorProperty) {
                     $properties[] = $behaviorProperty;
                 }
