@@ -30,10 +30,11 @@ foreach ($model->tableSchema->columns as $column) {
     if (strpos($column->dbType, 'decimal') !== false) {
         $type = 'number';
     }
-    if(!empty($column->comment)) {
+    if (!empty($column->comment)) {
         $comment = preg_replace('/[\r\n]+/u', ' ', $column->comment);
         $comment = ' ' . mb_substr($comment, 0, 100);
-    } else {
+    }
+    else {
         $comment = '';
     }
     $properties[] = ' * @property ' . $type . ' $' . $column->name . $comment;
@@ -48,12 +49,15 @@ if ($relations) {
         if (in_array($relation[0], array('CBelongsToRelation', 'CHasOneRelation'))) {
             $relationClass = $relation[1][0] == '\\' ? $relation[1] : '\\' . $relation[1];
             $properties[] = ' * @property ' . $relationClass . ' $' . $relationName;
-        } elseif (in_array($relation[0], array('CHasManyRelation', 'CManyManyRelation'))) {
+        }
+        elseif (in_array($relation[0], array('CHasManyRelation', 'CManyManyRelation'))) {
             $relationClass = $relation[1][0] == '\\' ? $relation[1] : '\\' . $relation[1];
             $properties[] = ' * @property ' . $relationClass . '[] $' . $relationName;
-        } elseif (in_array($relation[0], array('CStatRelation'))) {
+        }
+        elseif (in_array($relation[0], array('CStatRelation'))) {
             $properties[] = ' * @property integer $' . $relationName;
-        } else {
+        }
+        else {
             $properties[] = ' * @property unknown $' . $relationName;
         }
     }
@@ -94,10 +98,33 @@ $properties[] = " *";
 // behaviors
 $behaviors = $model->behaviors();
 if ($behaviors) {
-    foreach ($behaviors as $behavior) {
-        $properties[] = ' * @mixin ' . $this->getBehaviorClass($behavior);
+    if ($this->useMixin) {
+        foreach ($behaviors as $behavior) {
+            $properties[] = ' * @mixin ' . $this->getBehaviorClass($behavior);
+        }
+        $properties[] = ' *';
     }
-    $properties[] = ' *';
+    else {
+        $behaviorMethods = array();
+        foreach (get_class_methods('CActiveRecordBehavior') as $methodName)
+            $behaviorMethods[$methodName] = $methodName;
+        $behaviorProperties = array();
+        foreach (get_class_vars('CActiveRecordBehavior') as $propertyName)
+            $behaviorProperties[$propertyName] = $propertyName;
+
+        foreach ($behaviors as $behavior) {
+            $behavior = $this->getBehaviorClass($behavior);
+
+            $behaviorProperties = $this->getBehaviorProperties($modelClass, $behavior, CMap::mergeArray($behaviorMethods, $selfMethods), CMap::mergeArray($behaviorProperties, $selfProperties));
+            if ($behaviorProperties) {
+                $properties[] = ' * @see ' . $behavior;
+                foreach ($behaviorProperties as $behaviorProperty) {
+                    $properties[] = $behaviorProperty;
+                }
+                $properties[] = ' *';
+            }
+        }
+    }
 }
 
 // output the contents

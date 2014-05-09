@@ -27,6 +27,11 @@ class ModelDocCode extends CCodeModel
     public $addModelMethodDoc;
 
     /**
+     * @var int
+     */
+    public $useMixin = 1;
+
+    /**
      * @var string
      */
     public $beginBlock = ' * --- BEGIN ModelDoc ---';
@@ -47,8 +52,8 @@ class ModelDocCode extends CCodeModel
             array('modelPath', 'match', 'pattern' => '/^(\w+[\w\.]*)$/', 'message' => '{attribute} should only contain word characters and dots.'),
             array('modelClass', 'match', 'pattern' => '/^[a-zA-Z_]\w*$/', 'message' => '{attribute} should only contain word characters.'),
             array('modelPath', 'validateModelPath', 'skipOnError' => true),
-            array('modelPath,addModelMethodDoc', 'sticky'),
-            array('addModelMethodDoc', 'numerical', 'integerOnly' => true),
+            array('modelPath,addModelMethodDoc,useMixin', 'sticky'),
+            array('addModelMethodDoc,useMixin', 'numerical', 'integerOnly' => true),
         ));
     }
 
@@ -60,6 +65,7 @@ class ModelDocCode extends CCodeModel
         return array_merge(parent::attributeLabels(), array(
             'modelPath' => 'Model Path',
             'modelClass' => 'Model Class',
+            'useMixin' => 'Use @mixin tag for behaviors',
         ));
     }
 
@@ -120,11 +126,14 @@ class ModelDocCode extends CCodeModel
         $modelClass = '\\' . str_replace('.', '\\', $this->modelPath . '.' . $fileName);
         if (class_exists($modelClass, false)) {
             return $modelClass;
-        } elseif (class_exists($fileName, false)) {
+        }
+        elseif (class_exists($fileName, false)) {
             return $fileName;
-        } elseif (Yii::autoload($modelClass)) {
+        }
+        elseif (Yii::autoload($modelClass)) {
             return $modelClass;
-        } else {
+        }
+        else {
             return $fileName;
         }
     }
@@ -199,7 +208,7 @@ class ModelDocCode extends CCodeModel
             $behavior = $behavior['class'];
         $behavior = explode('.', $behavior);
         $behavior = $behavior[count($behavior) - 1];
-        return $behavior[0] ==  '\\' ? $behavior : '\\' . $behavior;
+        return $behavior[0] == '\\' ? $behavior : '\\' . $behavior;
     }
 
     /**
@@ -234,6 +243,166 @@ class ModelDocCode extends CCodeModel
             $len = $len + strlen($end);
         }
         return substr($contents, $startPos, $len);
+    }
+
+    /**
+     * @param $modelClass
+     * @param $behavior
+     * @param array $ignoreMethods
+     * @return array
+     */
+    public function getBehaviorProperties($modelClass, $behavior, $ignoreMethods = array())
+    {
+        $properties = array();
+
+        //// properties
+        //foreach (get_class_vars($behavior) as $propertyName => $default) {
+        //    if (isset($ignoreProperties[$propertyName]))
+        //        continue;
+        //    $properties[] = ' * @property ' . gettype($default) . ' $' . $propertyName;
+        //}
+
+        // methods
+        $ignoreMethods['__destruct'] = '__destruct';
+        foreach (get_class_methods($behavior) as $methodName) {
+            if (isset($ignoreMethods[$methodName]))
+                continue;
+            $methodReturn = $this->getTypeFromDocComment($behavior, $methodName, 'return');
+            $paramTypes = $this->getDocComment($behavior, $methodName, 'param');
+            $methodReturn = $methodReturn ? current($methodReturn) . ' ' : '';
+            $property = " * @method {$methodReturn}{$methodName}(";
+            $r = new ReflectionMethod($behavior, $methodName);
+            $params = $r->getParameters();
+            $separator = '';
+            foreach ($params as $param) {
+                //$param is an instance of ReflectionParameter
+                /* @var $param ReflectionParameter */
+                $type = current($paramTypes);
+                $filterType = '';
+                if ($type && strpos($type, '$')) {
+                    $typeString = $this->getBetweenString($type, false, '$');
+                    $typeString = trim($typeString);
+                    $filterType = $this->filterDocType($typeString);
+                    $filterType = $filterType ? trim($filterType) . ' ' : '';
+                }
+                next($paramTypes);
+                $property .= $separator . $filterType . '$' . $param->getName();
+                if ($param->isOptional()) {
+                    $property .= ' = ';
+                    $property .= strtr(str_replace("\n", '', var_export($param->getDefaultValue(), true)), array(
+                        'array (' => 'array(',
+                    ));
+                }
+                $separator = ', ';
+            }
+            $property .= ")";
+            $property = str_replace('CActiveRecord', $modelClass, $property);
+            $properties[] = $property;
+
+        }
+
+        return $properties;
+    }
+
+    /**
+     * @param $class
+     * @param $method
+     * @param string $tag
+     * @return array|string
+     */
+    public function getDocComment($class, $method, $tag = '')
+    {
+        $reflection = new ReflectionMethod($class, $method);
+        $comment = $reflection->getDocComment();
+        if (!$tag) {
+            return $comment;
+        }
+
+        $matches = array();
+        preg_match_all("/@" . $tag . " (.*)(\\r\\n|\\r|\\n)/U", $comment, $matches);
+
+        $returns = array();
+        foreach ($matches[1] as $match) {
+            $match = explode(' ', $match);
+            $type = $match[0];
+            $name = isset($match[1]) ? $match[1] : '';
+            if (strpos($type, '$') === 0) {
+                $name_ = $name;
+                $name = $type;
+                $type = $name_;
+            }
+            if (strpos($name, '$') !== 0) {
+                $name = '';
+            }
+            $returns[] = trim($type . ' ' . $name);
+        }
+
+        return $returns;
+    }
+
+    /**
+     * @param $class
+     * @param $method
+     * @param $tag
+     * @return array
+     */
+    public function getTypeFromDocComment($class, $method, $tag)
+    {
+        $types = $this->getDocComment($class, $method, $tag);
+        $returnTypes = array();
+        foreach ($types as $k => $type) {
+            $filteredType = $this->filterDocType($type);
+            if ($filteredType) {
+                $returnTypes[$k] = trim($filteredType);
+            }
+        }
+        return $returnTypes;
+
+    }
+
+    /**
+     * @param string $type
+     * @return mixed|string
+     */
+    public function filterDocType($type)
+    {
+        $ignoreTypes = array('void', 'mixed', 'null');
+        $replace = array(
+            'bool' => 'boolean',
+            'integer' => 'int',
+        );
+        $filteredType = '';
+        if (strpos($type, '|') !== false) {
+            $multiType = explode('|', $type);
+            $multiTypeSafe = array();
+            foreach ($multiType as $singleType) {
+                if (!in_array($singleType, $ignoreTypes)) {
+                    if (isset($replace[$singleType])) {
+                        $singleType = $replace[$singleType];
+                    }
+                    $multiTypeSafe[] = $singleType;
+                }
+            }
+            $filteredType = implode('|', $multiTypeSafe);
+        }
+        else {
+            if (!in_array($type, $ignoreTypes)) {
+                $filteredType = $type;
+                if (isset($replace[$type])) {
+                    $filteredType = $replace[$type];
+                }
+            }
+        }
+        if ($filteredType) {
+            $filteredType = str_replace('-', ' ', $filteredType);
+            $filteredType = trim($filteredType);
+            if (strpos($type, ' ')) {
+                $filteredType = $this->getBetweenString($type, false, ' ');
+            }
+        }
+
+        return $filteredType;
+
     }
 
 }
