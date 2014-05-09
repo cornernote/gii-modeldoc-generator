@@ -12,6 +12,7 @@ ModelDoc Generator will extend Gii too allow you to update your existing models 
 - [Usage](#usage)
 - [Notes](#notes)
 - [Resources](#resources)
+- [Support](#support)
 - [License](#license)
 
 
@@ -122,11 +123,21 @@ This extension will not create any new model files.  You should first create the
 
 ## Resources
 
-[![Mr PHP](https://raw.github.com/cornernote/mrphp-assets/master/img/code-banner.png)](http://mrphp.com.au) [![Github Project](https://raw.github.com/cornernote/mrphp-assets/master/vendor/github/github-latest-sourcecode-16.png)](https://github.com/cornernote/gii-modeldoc-generator#gii-modeldoc-generator-for-yii) [![Yii Extension](https://raw.github.com/cornernote/mrphp-assets/master/vendor/yii/yii-extension-16.png)](http://www.yiiframework.com/extension/gii-modeldoc-generator) [![Project Stats](https://www.ohloh.net/p/gii-modeldoc-generator/widgets/project_thin_badge.gif)](https://www.ohloh.net/p/gii-modeldoc-generator)
+- **[GitHub Project](https://github.com/cornernote/gii-modeldoc-generator)**
+- **[Yii Extension](http://www.yiiframework.com/extension/gii-modeldoc-generator)**
 
-[![Latest Stable Version](https://poser.pugx.org/cornernote/gii-modeldoc-generator/v/stable.png)](https://packagist.org/packages/cornernote/gii-modeldoc-generator) [![Build Status](https://travis-ci.org/cornernote/gii-modeldoc-generator.png?branch=master)](https://travis-ci.org/cornernote/gii-modeldoc-generator) [![Dependencies Check](https://depending.in/cornernote/gii-modeldoc-generator.png)](https://depending.in/cornernote/gii-modeldoc-generator)
 
+## Support
+
+- Does this README need improvement?  Go ahead and [suggest a change](https://github.com/cornernote/gii-modeldoc-generator/edit/master/README.md).
+- Found a bug, or need help using this project?  Check the [open issues](https://github.com/cornernote/gii-modeldoc-generator/issues) or [create an issue](https://github.com/cornernote/gii-modeldoc-generator/issues/new).
+ 
 
 ## License
 
 [BSD-3-Clause](https://raw.github.com/cornernote/gii-modeldoc-generator/master/LICENSE), Copyright © 2013-2014 [Mr PHP](mailto:info@mrphp.com.au)
+
+
+[![Mr PHP](https://raw.github.com/cornernote/mrphp-assets/master/img/code-banner.png)](http://mrphp.com.au) [![Github Project](https://raw.github.com/cornernote/mrphp-assets/master/vendor/github/github-latest-sourcecode-16.png)](https://github.com/cornernote/gii-modeldoc-generator#gii-modeldoc-generator-for-yii) [![Yii Extension](https://raw.github.com/cornernote/mrphp-assets/master/vendor/yii/yii-extension-16.png)](http://www.yiiframework.com/extension/gii-modeldoc-generator) [![Project Stats](https://www.ohloh.net/p/gii-modeldoc-generator/widgets/project_thin_badge.gif)](https://www.ohloh.net/p/gii-modeldoc-generator)
+
+[![Latest Stable Version](https://poser.pugx.org/cornernote/gii-modeldoc-generator/v/stable.png)](https://packagist.org/packages/cornernote/gii-modeldoc-generator) [![Build Status](https://travis-ci.org/cornernote/gii-modeldoc-generator.png?branch=master)](https://travis-ci.org/cornernote/gii-modeldoc-generator) [![Dependencies Check](https://depending.in/cornernote/gii-modeldoc-generator.png)](https://depending.in/cornernote/gii-modeldoc-generator)
