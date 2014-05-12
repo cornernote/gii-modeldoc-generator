@@ -83,7 +83,7 @@ if ($this->addModelMethodDoc)
 $properties[] = " * @method {$modelClass} find(\$condition = '', array \$params = array())";
 $properties[] = " * @method {$modelClass} findByPk(\$pk, \$condition = '', array \$params = array())";
 $properties[] = " * @method {$modelClass} findByAttributes(array \$attributes, \$condition = '', array \$params = array())";
-$properties[] = " * @method {$modelClass} fndBySql(\$sql, array \$params = array())";
+$properties[] = " * @method {$modelClass} findBySql(\$sql, array \$params = array())";
 $properties[] = " * @method {$modelClass}[] findAll(\$condition = '', array \$params = array())";
 $properties[] = " * @method {$modelClass}[] findAllByPk(\$pk, \$condition = '', array \$params = array())";
 $properties[] = " * @method {$modelClass}[] findAllByAttributes(array \$attributes, \$condition = '', array \$params = array())";
