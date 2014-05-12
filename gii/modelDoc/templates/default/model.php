@@ -104,7 +104,9 @@ if ($behaviors) {
         foreach ($behaviors as $behaviorName => $behavior) {
             $behaviorClass = $this->getBehaviorClass($behavior);
             $properties[] = ' * @mixin ' . $behaviorClass;
-            $properties[] = ' * @property ' . $behaviorClass . ' $' . $behaviorName;
+            if (!is_numeric($behaviorName)) {
+                $properties[] = ' * @property ' . $behaviorClass . ' $' . $behaviorName;
+            }
         }
         $properties[] = ' *';
     }
