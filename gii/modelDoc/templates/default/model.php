@@ -15,6 +15,11 @@
  */
 $properties = array(' *');
 
+// refresh model table schema
+Yii::app()->db->getSchema()->refresh();
+$model->refreshMetaData();
+$model->refresh();
+
 // get own methods and properties
 $modelClass = $reflection->getShortName();
 if (!$reflection->inNamespace())
