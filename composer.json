@@ -16,6 +16,6 @@
         }
     ],
     "require-dev": {
-        "yiisoft/yii": "1.1.14"
+        "yiisoft/yii": "1.1.15"
     }
 }
