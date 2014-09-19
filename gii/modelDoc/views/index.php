@@ -5,8 +5,10 @@
  * @copyright 2013 Mr PHP
  * @link https://github.com/cornernote/gii-modeldoc-generator
  * @license BSD-3-Clause https://raw.github.com/cornernote/gii-modeldoc-generator/master/LICENSE
+ *
+ * @var ModelDocCode $model
  */
-$class = get_class($model);
+
 ?>
 <h1>ModelDoc Generator</h1>
 
@@ -33,14 +35,16 @@ $class = get_class($model);
     </div>
     <?php echo $form->error($model, 'modelPath'); ?>
 </div>
-<div class="row checkbox">
-    <?php echo $form->label($model, 'addModelMethodDoc'); ?>
-    <?php echo $form->checkbox($model, 'addModelMethodDoc'); ?>
-    <div class="tooltip">
-        Adds a method doc for the model function.
+<?php if (!$model::haveReturnStaticDoc()): ?>
+    <div class="row checkbox">
+        <?php echo $form->label($model, 'addModelMethodDoc'); ?>
+        <?php echo $form->checkbox($model, 'addModelMethodDoc'); ?>
+        <div class="tooltip">
+            Adds a method doc for the model function.
+        </div>
+        <?php echo $form->error($model, 'addModelMethodDoc'); ?>
     </div>
-    <?php echo $form->error($model, 'addModelMethodDoc'); ?>
-</div>
+<?php endif; ?>
 <div class="row checkbox">
     <?php echo $form->label($model, 'useMixin'); ?>
     <?php echo $form->checkbox($model, 'useMixin'); ?>
