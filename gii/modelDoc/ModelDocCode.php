@@ -405,4 +405,13 @@ class ModelDocCode extends CCodeModel
 
     }
 
+    /**
+     * Since 1.1.16 all static methods in CActiveRecord returns 'static' type.
+     * @return bool
+     */
+    static public function haveReturnStaticDoc()
+    {
+        return version_compare(Yii::getVersion(), '1.1.16') >= 0;
+
+    }
 }
