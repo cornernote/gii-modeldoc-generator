@@ -72,7 +72,7 @@ Add the `vendor` folder to the `aliases` in your yii configuration:
 
 ### Manual Installation
 
-Download the [latest release](https://github.com/cornernote/gii-modeldoc-generator/releases/latest) or [development version](https://github.com/cornernote/gii-modeldoc-generator/archive/master.zip) and move the `audit` folder into your `protected/modules` folder.
+Download the [latest release](https://github.com/cornernote/gii-modeldoc-generator/releases/latest) or [development version](https://github.com/cornernote/gii-modeldoc-generator/archive/master.zip) and move the `gii-modeldoc-generator` folder into your `protected/modules` folder.
 
 
 ## Configuration
