@@ -1,6 +1,6 @@
 # Gii ModelDoc Generator for Yii
 
-ModelDoc Generator will extend Gii too allow you to update your existing models with [phpDoc](http://www.phpdoc.org/) compatible documentation.
+ModelDoc Generator will extend Gii allowing an update to existing models with [phpDoc](http://www.phpdoc.org/) compatible documentation.
 
 
 ### Contents
