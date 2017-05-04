@@ -162,6 +162,8 @@ class ModelDocCode extends CCodeModel
             $reflectedClass = new ReflectionClass($modelClass);
             if ($reflectedClass->isInstantiable() === false)
                 continue; //continue if this class is not instantiable
+            if (!$reflectedClass->isSubclassOf(CActiveRecord::class))
+                continue;
 
             // load the model
             try {
@@ -169,7 +171,7 @@ class ModelDocCode extends CCodeModel
             } catch (Exception $e) {
                 $model = null;
             }
-            if (!$model || !is_subclass_of($model, 'CActiveRecord'))
+            if ($model === null)
                 continue;
 
             // everything passes, add it to the list
