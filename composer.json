@@ -17,5 +17,10 @@
     ],
     "require-dev": {
         "yiisoft/yii": "1.1.15"
+    },
+    "extra": {
+        "branch-alias": {
+            "dev-master": "1.2.x-dev"
+        }
     }
 }
